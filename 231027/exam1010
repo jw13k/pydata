@@ -1,0 +1,55 @@
+import csv
+import matplotlib.pyplot as plt
+
+csv_file = open('샘플데이터 - 시트1.csv', 'r', encoding='utf-8')
+csv_data = csv.reader(csv_file)
+
+header = next(csv_data)
+header = next(csv_data)
+
+male_count = 0
+female_count = 0
+etc_count = 0
+
+a_cnt = 0
+b_cnt = 0
+ab_cnt = 0
+o_cnt = 0
+z_cnt = 0
+
+for line in csv_data:
+    if line[2] != '':
+        if line[3] == '남':
+            male_count = male_count + 1
+        elif line[3] == '여':
+            female_count = female_count + 1
+        else:
+            etc_count = etc_count + 1
+
+        if line[4] == 'A':
+            a_cnt = a_cnt + 1
+        elif line[4] == 'B':
+            b_cnt = b_cnt +1
+        elif line[4] == 'AB':
+            ab_cnt = ab_cnt + 1
+        elif line[4] == 'O':
+            o_cnt = o_cnt + 1
+        else:
+            z_cnt = z_cnt + 1
+
+
+print('남:', male_count)
+print('여:', female_count)
+print('기타:', etc_count)
+
+##################################################
+plt.rc('font', family='Malgun Gothic')
+
+#data = [male_count, female_count, etc_count]
+data = [a_cnt, b_cnt, ab_cnt, o_cnt, z_cnt]
+label_text = ['A형', 'B형', 'AB형', 'O형', '기타',]
+plt.axis('equal')
+
+plt.pie(data, labels=label_text, autopct='%.1f%%')
+plt.legend()
+plt.show()
